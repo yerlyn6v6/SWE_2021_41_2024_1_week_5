@@ -1,0 +1,21 @@
+#!/bin/bash
+
+ls -al
+files_folder="./files"
+
+if [ ! -d "$files_folder" ]; then
+    echo "Error: 'files' folder not found."
+    exit 1
+fi
+
+for file in "$files_folder"/*; do
+    if [ -f "$file" ]; then
+        first=$(basename "$file" | cut -c1)
+        destination="./$first"
+        if [ ! -d "$destination" ]; then
+            mkdir "$destination"
+        fi
+        mv "$file" "$destination/"
+        echo "Moved $(basename "$file") to $destination/"
+    fi
+done
